@@ -225,7 +225,7 @@ def fetch_user_info(api_key: str, handle: str) -> dict | None:
 def fetch_recent_followings(api_key: str, handle: str) -> list[dict] | None:
     """Returns the FIRST PAGE of followings (most recent first), or None."""
     headers = {"X-API-Key": api_key}
-    params = {"userName": handle}
+    params = {"userName": handle, "pageSize": "20"}
     res = http_get(f"{API_BASE}/twitter/user/followings", headers, params)
     if res is None:
         return None
