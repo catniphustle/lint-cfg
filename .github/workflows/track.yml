@@ -2,22 +2,21 @@ name: KOL Follow Tracker
 
 on:
   schedule:
-    - cron: '*/15 * * * *'         # every 15 minutes
-  workflow_dispatch:               # also lets you run it manually from the Actions tab
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
 
 permissions:
-  contents: write                  # needed so the job can commit state.json back
+  contents: write
 
-# Prevent overlapping runs (e.g., if a prior run is slow when a new one starts).
 concurrency:
   group: kol-follow-tracker
   cancel-in-progress: false
 
 jobs:
   poll:
-   runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
     env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true 
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     timeout-minutes: 10
     steps:
       - name: Checkout repo
