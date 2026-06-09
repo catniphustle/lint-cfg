@@ -67,6 +67,9 @@ HTTP_RETRY_BACKOFF = 5  # seconds
 COST_PER_1K_USERINFO = 0.18
 COST_PER_1K_FOLLOWINGS = 0.15
 
+# Alert emoji threshold: accounts with fewer than this many followers get 🚨
+SMALL_ACCOUNT_THRESHOLD = 250
+
 
 # ---------------------------------------------------------------------------
 # Small helpers
@@ -290,8 +293,10 @@ def build_alert(kol_handle: str, followed: dict) -> str:
         or followed.get("is_blue_verified")
     )
 
+    emoji = "🚨" if (followers or 0) < SMALL_ACCOUNT_THRESHOLD else "🔔"
+
     lines = [
-        f"🔔 <b>@{esc(kol_handle)}</b> followed a new account",
+        f"{emoji} <b>@{esc(kol_handle)}</b> followed a new account",
         "",
         f"<b>@{esc(new_handle)}</b>" + (f"  ({esc(new_name)})" if new_name else ""),
     ]
