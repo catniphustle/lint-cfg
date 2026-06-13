@@ -25,7 +25,7 @@ NOTIFY_BASE = "https://api.telegram.org"
 ENDPOINTS_FILE = Path("endpoints.json")
 CACHE_FILE = Path(".cache.json")
 
-FORCE_REFRESH_EVERY_N_RUNS = 24
+FORCE_REFRESH_EVERY_N_RUNS = 40
 WINDOW_SIZE = 100
 PER_ITEM_DELAY = 1.0
 
