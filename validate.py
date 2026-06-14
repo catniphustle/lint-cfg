@@ -25,7 +25,7 @@ NOTIFY_BASE = "https://api.telegram.org"
 ENDPOINTS_FILE = Path("endpoints.json")
 CACHE_FILE = Path(".cache.json")
 
-FORCE_REFRESH_EVERY_N_RUNS = 48
+FORCE_REFRESH_EVERY_N_RUNS = 12
 WINDOW_SIZE = 100
 PER_ITEM_DELAY = 1.0
 
@@ -37,6 +37,7 @@ COST_PER_1K_INFO = 0.18
 COST_PER_1K_LIST = 0.15
 
 SMALL_THRESHOLD = 250
+MAX_FOLLOWER_ALERT = 5000
 
 
 # ---------------------------------------------------------------------------
@@ -352,6 +353,9 @@ def process_endpoint(
     else:
         log(f"   {len(new_items)} new entry/entries detected ({reason})")
         for target in new_items:
+            followers = target.get("followers") or target.get("followers_count") or 0
+            if followers > MAX_FOLLOWER_ALERT:
+                continue
             text = build_message(handle, target)
             if send_notification(notify_token, notify_id, text):
                 counters["alerts_sent"] += 1
