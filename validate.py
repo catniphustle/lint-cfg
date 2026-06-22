@@ -38,6 +38,7 @@ COST_PER_1K_LIST = 0.15
 
 SMALL_THRESHOLD = 250
 MAX_FOLLOWER_ALERT = 5000
+MAX_FOLLOWING_ALERT = 300
 
 
 # ---------------------------------------------------------------------------
@@ -353,8 +354,15 @@ def process_endpoint(
     else:
         log(f"   {len(new_items)} new entry/entries detected ({reason})")
         for target in new_items:
-            followers = target.get("followers") or target.get("followers_count") or 0
+            followers = target.get("followers")
+            if followers is None:
+                followers = target.get("followers_count") or 0
+            following = target.get("following")
+            if following is None:
+                following = target.get("friends_count") or 0
             if followers > MAX_FOLLOWER_ALERT:
+                continue
+            if following > MAX_FOLLOWING_ALERT:
                 continue
             text = build_message(handle, target)
             if send_notification(notify_token, notify_id, text):
