@@ -37,8 +37,8 @@ COST_PER_1K_INFO = 0.18
 COST_PER_1K_LIST = 0.15
 
 SMALL_THRESHOLD = 250
-MAX_FOLLOWER_ALERT = 5000
-MAX_FOLLOWING_ALERT = 300
+MAX_FOLLOWER_ALERT = 500
+MAX_FOLLOWING_ALERT = 50
 
 
 # ---------------------------------------------------------------------------
